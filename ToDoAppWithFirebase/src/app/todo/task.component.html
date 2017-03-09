@@ -3,29 +3,56 @@
 
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <form role="form" novalidate>
-            <div class="input-group input-group-lg">
-                <input [(ngModel)]="task.title" (keyup.enter)="saveTask()" type="text" name="taskTitle" class="form-control" placeholder="O que você deseja fazer?" />
-                <span class="input-group-btn">
-                    <button class="btn btn-default" type="button" (click)="saveTask()">+</button>
-                </span>
-            </div>
-        </form>
+        
+        <div class="panel panel-primary">              
+              <div class="panel-body">
+                    <form role="form" class="" novalidate>
+                        <div class="form-group">
+                            <label for="title">Título</label>
+                            <input [(ngModel)]="task.title" type="text" class="form-control" id="title" name="title" placeholder="O que você deseja fazer?" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description">Descrição</label>
+                            <input [(ngModel)]="task.description" type="text" class="form-control" id="description" name="description" placeholder="Uma pequena descrição" />
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary" (click)="saveTask()">Salvar</button>
+                        <!--<div class="input-group input-group-lg">
+                            <input [(ngModel)]="task.title" (keyup.enter)="saveTask()" type="text" name="taskTitle" class="form-control" placeholder="O que você deseja fazer?" />
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" (click)="saveTask()">+</button>
+                            </span>
+                        </div>-->
+                    </form>
+              </div>
+        </div>
+        
+        
     </div>
 </div>
 
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        <ul class="list-group">
-            <li class="list-group-item" *ngFor="let task of tasks">                 
-                <a class="remove" (click)="remove(task)">
-                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                </a>
+        <div class="bs-callout" *ngFor="let task of tasks" [ngClass]="{ 'bs-callout-primary': !task.done }">            
+            <div class="row">
                 
-                <input type="checkbox" [checked]="task.done" (click)="toggleDone(task)" />              
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                    <input type="checkbox" [checked]="task.done" (click)="toggleDone(task)" />    
+                </div>
 
-                <label [ngClass]="{ 'item-done': task.done }" (dblclick)="editTask(task)"> {{task.title}}</label>              
-            </li>
-        </ul>
+                <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                    <h4 [ngClass]="{ 'item-done': task.done }">{{task.title}}</h4>
+                    <div [ngClass]="{ 'item-done': task.done }">{{task.description}}</div>    
+                </div>
+                
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 remove">
+                    <a (click)="remove(task)">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    </a>
+                </div>
+                
+            </div>            
+        </div>
     </div>
 </div>

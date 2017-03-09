@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 import { Task } from './task.model';
 
 export const TASKS: Task[] = [
-  {done: false, title: 'Item 1'},
-  {done: true, title: 'Item 2'},
-  {done: false, title: 'Item 3'},
+  {done: false, title: 'Item 1', description: 'Descrição do item 1' },
+  {done: true, title: 'Item 2', description: 'Descrição do item 2'},
+  {done: false, title: 'Item 3', description: 'Descrição do item 3'},
 ];
 
 @Injectable()
