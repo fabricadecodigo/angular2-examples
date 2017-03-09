@@ -1,0 +1,31 @@
+<h1 class="text-center">ToDo</h1>
+
+
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <form role="form" novalidate>
+            <div class="input-group input-group-lg">
+                <input [(ngModel)]="task.title" (keyup.enter)="saveTask()" type="text" name="taskTitle" class="form-control" placeholder="O que você deseja fazer?" />
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" (click)="saveTask()">+</button>
+                </span>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <ul class="list-group">
+            <li class="list-group-item" *ngFor="let task of tasks">                 
+                <a class="remove" (click)="remove(task)">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                </a>
+                
+                <input type="checkbox" [checked]="task.done" (click)="toggleDone(task)" />              
+
+                <label [ngClass]="{ 'item-done': task.done }" (dblclick)="editTask(task)"> {{task.title}}</label>              
+            </li>
+        </ul>
+    </div>
+</div>

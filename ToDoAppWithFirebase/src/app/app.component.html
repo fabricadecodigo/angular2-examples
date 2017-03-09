@@ -1,0 +1,31 @@
+
+
+<div id="form" class="center-block">
+    <!--form-->
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <form novalidate>
+                <div class="form-group">
+                    <label for="">Descrição</label>
+                    <input type="text" class="form-control" id="" placeholder="Qual a tarefa?">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <!--itens-->
+    <div class="panel panel-default">
+        <div class="panel-body">            
+            <form novalidate>                
+                <div class="checkbox" *ngFor="let item of items">
+                    <label>
+                        <input type="checkbox" [(ngModel)]="hero.name">
+                        {{ item.description }}
+                    </label>
+                </div>                                            
+            </form>            
+        </div>
+    </div>
+</div>

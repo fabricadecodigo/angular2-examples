@@ -1,0 +1,27 @@
+body {
+  margin: 30px 0;
+}
+
+#form {
+  width: 700px;    
+}
+
+.item-done {
+  text-decoration: line-through;
+}
+
+.remove {
+  color: red;  
+  float: right;
+  margin: 5px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.remove:hover {  
+  color: darkred;
+}
+
+.list-group .list-group-item .checkbox {  
+  display: inline-block;
+}
