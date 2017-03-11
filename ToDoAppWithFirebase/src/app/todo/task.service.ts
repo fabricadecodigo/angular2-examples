@@ -1,34 +1,64 @@
 import { Injectable } from '@angular/core';
-
 import { Task } from './task.model';
-
-export const TASKS: Task[] = [
-  {done: false, title: 'Item 1', description: 'Descrição do item 1' },
-  {done: true, title: 'Item 2', description: 'Descrição do item 2'},
-  {done: false, title: 'Item 3', description: 'Descrição do item 3'},
-];
+import { AngularFire, FirebaseListObservable } from 'angularfire2';
 
 @Injectable()
 export class TaskService {
+  angularfire: AngularFire;
+  items: FirebaseListObservable<any>;
+
+  constructor(af: AngularFire) {
+    this.angularfire = af;
+  }
+
   getAll() {
-    return Promise.resolve(TASKS);
+    this.items = this.angularfire.database.list('/tasks');
+    return this.items;
+  }
+
+  getAllCompleted() {
+    this.items = this.angularfire.database.list('/tasks',  {
+      query: {
+        orderByChild: 'done',
+        equalTo: true
+      }
+    });
+    return this.items;
+  }
+
+  getAllOpened() {
+    this.items = this.angularfire.database.list('/tasks',  {
+      query: {
+        orderByChild: 'done',
+        equalTo: false
+      }
+    });
+    return this.items;
   }
 
   add(task: Task) {
-    TASKS.push(task);
+    task.done = false;
+    this.items.push(task);
+  }
+
+  update(task: Task) {
+    this.items.update(task.$key, task);
   }
 
   save(task: Task) {
-    if (TASKS.indexOf(task) < 0) {
+    if (task.$key == null) {
       this.add(task);
+    } else {
+      this.update(task);
     }
   }
 
   remove(task: Task) {
-    TASKS.splice(TASKS.indexOf(task), 1);
+    this.items.remove(task.$key);
   }
 
   toggleDone(task: Task) {
     task.done = !task.done;
+    this.update(task);
   }
 }

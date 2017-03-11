@@ -1,13 +1,14 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Task } from './task.model';
 import { TaskService } from './task.service';
+import { FirebaseListObservable } from 'angularfire2';
 
 @Component({
   selector: 'todo-task',
   templateUrl: 'app/todo/task.component.html'
 })
 export class TaskComponent implements OnInit {
-  tasks: Task[] = [];
+  tasks: FirebaseListObservable<any>;
   task: Task;
 
   constructor(private taskService: TaskService) {
@@ -15,13 +16,14 @@ export class TaskComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.taskService.getAll()
-      .then(t => this.tasks = t);
+    this.tasks = this.taskService.getAll();
   }
 
   saveTask() {
-    this.taskService.save(this.task);
-    this.task = new Task();
+    if (this.task.title && this.task.description) {
+      this.taskService.save(this.task);
+      this.task = new Task();
+    }
   }
 
   editTask(task: Task) {
@@ -34,5 +36,19 @@ export class TaskComponent implements OnInit {
 
   toggleDone(task: Task) {
     this.taskService.toggleDone(task);
+  }
+
+  filterTasks(filter: number) {
+    switch (filter) {
+      case 1:
+        this.tasks = this.taskService.getAll();
+        break;
+      case 2:
+        this.tasks = this.taskService.getAllOpened();
+        break;
+      case 3:
+        this.tasks = this.taskService.getAllCompleted();
+        break;
+    }
   }
 }
