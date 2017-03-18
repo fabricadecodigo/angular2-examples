@@ -16,10 +16,12 @@ export class TaskComponent implements OnInit {
   }
 
   ngOnInit() {
+    // Ao iniciar o componente, busco todos os items já existentes no Firebase.
     this.tasks = this.taskService.getAll();
   }
 
   saveTask() {
+    // Se os campos do formulario foram preenchidos, adiciono a nova tarefa.
     if (this.task.title && this.task.description) {
       this.taskService.save(this.task);
       this.task = new Task();
@@ -27,6 +29,7 @@ export class TaskComponent implements OnInit {
   }
 
   editTask(task: Task) {
+    // Ao clicar 2x em um item da lista e vai para o formulário para ser editado.
     this.task = task;
   }
 
@@ -39,14 +42,15 @@ export class TaskComponent implements OnInit {
   }
 
   filterTasks(filter: number) {
+    // Filtrando os itens
     switch (filter) {
-      case 1:
+      case 1: // Todos
         this.tasks = this.taskService.getAll();
         break;
-      case 2:
+      case 2: // Todas tarefas em aberto
         this.tasks = this.taskService.getAllOpened();
         break;
-      case 3:
+      case 3: // Todas tarefas concluídas
         this.tasks = this.taskService.getAllCompleted();
         break;
     }
